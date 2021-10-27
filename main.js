@@ -8,10 +8,12 @@ webSocket.onmessage = (event) => {
     let stockObject = JSON.parse(event.data);
     let price = parseFloat(stockObject.p).toFixed(2);
     stockPriceElement.innerText = price;
-/*Om lastPrice är null eller oförändrat då blir siffrorna svarta. Price större än lastPrice då blir den grön, ifall mindre röd.
+/*Om lastPrice är null eller oförändrat då blir siffrorna svarta. Price större än lastPrice då blir den grön, 
+ifall mindre röd.
 ! = not / inte          === = strictly equal too/ strikt likamed
 || = or / eller         ? = if/om       : = delimiter / avgränsare*/                       
-    stockPriceElement.style.color = !lastPrice || lastPrice === price ? 'black' : price > lastPrice ? 'green' : 'red';
+    stockPriceElement.style.color = !lastPrice || lastPrice === price ? 'black' : 
+    price > lastPrice ? 'green' : 'red';
 
     lastPrice = price;
 };
