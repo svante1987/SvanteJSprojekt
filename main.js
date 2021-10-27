@@ -6,5 +6,5 @@ let stockPriceElement = document.getElementById('stockPrice');
 webSocket.onmessage = (event) => {
     let stockObject = JSON.parse(event.data);
 
-    stockPriceElement.innerText = stockObject.p;
+    stockPriceElement.innerText = parseFloat (stockObject.p).toFixed(2);
 };
