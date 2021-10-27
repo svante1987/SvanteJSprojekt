@@ -1,10 +1,10 @@
 // min websocket som hämtar information om kryptovaluta från binance api url.
 // wss står för websocket secure connection
-let webSocket = new WebSocket('wss://stream.binance.com:9443/ws/etheur@trade');
+let webSocketPrice = new WebSocket('wss://stream.binance.com:9443/ws/etheur@trade');
 let stockPriceElement = document.getElementById('stockPrice');
 let lastPrice = null;
 
-webSocket.onmessage = (event) => {
+webSocketPrice.onmessage = (event) => {
     let stockObject = JSON.parse(event.data);
     let price = parseFloat(stockObject.p).toFixed(2);
     stockPriceElement.innerText = price;
@@ -16,4 +16,11 @@ ifall mindre röd.
     price > lastPrice ? 'green' : 'red';
 
     lastPrice = price;
+};
+
+// nu ska jag göra en ny websocket för att hämta candlestick handelsinformation ifrån binance API.
+let webSocketCandlestick = new WebSocket('wss://stream.binance.com:9443/ws/etheur@kline_1m');
+
+webSocketCandlestick.onmessage = (event) => {
+    console.log(event.data);
 };
