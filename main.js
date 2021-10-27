@@ -22,9 +22,19 @@ ifall mindre röd.
 let webSocketCandlestick = new WebSocket('wss://stream.binance.com:9443/ws/etheur@kline_1m');
 
 webSocketCandlestick.onmessage = (event) => {
-    console.log(event.data);
+    let message = JSON.parse(event.data);
+    //k hämtar candlestick datan och inte allt det andra som jag inte vill ha.
+    let candlestick = message.k;
+    console.log(message.k);
 };
-
+//metod för att uppdatera candlesticksen
+barSeries.update({
+    time: '2018-12-19',
+    open: 141.77,
+    high: 170.39,
+    low: 120.25,
+    close: 145.72,
+});
 
 // kod för att göra candlestick graf.
 var chart = LightweightCharts.createChart(document.getElementById('stockChart'), {
