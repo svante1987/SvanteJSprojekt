@@ -26,6 +26,7 @@ https://jsfiddle.net/TradingView/eaod9Lq8/*/
 var chart = LightweightCharts.createChart(document.getElementById('stockChart'), {
 	width: 1000,
   height: 500,
+  
 	layout: {
 		backgroundColor: '#000000',
 		textColor: 'rgba(255, 255, 255, 0.9)',
@@ -52,7 +53,21 @@ var chart = LightweightCharts.createChart(document.getElementById('stockChart'),
 	},
 });
 
-var candleSeries = chart.addCandlestickSeries({
+//Funktion som gör mitt chart fönster lite mer responsivt.
+let x = window.matchMedia("(max-width: 700px)")
+  chartSize(x)
+  x.addListener(chartSize)
+
+function chartSize(x) {
+    if (x.matches) {
+        chart.resize(250, 150);
+    }
+    else{
+        chart.resize(1000, 500);
+    }
+  }
+  
+let candleSeries = chart.addCandlestickSeries({
   upColor: 'rgba(255, 144, 0, 1)',
   downColor: '#000',
   borderDownColor: 'rgba(255, 144, 0, 1)',
