@@ -1,3 +1,4 @@
+"use strict";
 ///#region SHOW PRICE
 // min websocket som hämtar information om kryptovaluta från binance api url.
 // wss står för websocket secure connection
