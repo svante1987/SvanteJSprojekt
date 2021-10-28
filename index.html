@@ -13,7 +13,7 @@
 </head>
 <body>
 <div>
-    <nav class="navbar navbar-light bg-light">
+    <nav class="navbar navbar-light" id="kryptoNav">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">
             <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-coin" viewBox="0 0 16 16">
@@ -26,15 +26,25 @@
       </nav>
 </div>
 
-<main>
-  <div>
-    <h1 id="stockPrice">---</h1>
-  </div>
+<div class="container">
+  <div class="row">
+    <div class="container-lg rounded shadow m-4 p-4" id="mainBox">
+  
+  
 
-  <div id="stockChart">
+        <div class="col-4 m-4 p-4 rounded shadow" id="priceBox">
+          <h1>Ethereum</h1>
+          <h1 id="stockPrice">---</h1>
+        </div>
+
+        <div class="container-lg m-4 p-4 rounded shadow" id="chartBox">
+          <span id="stockChart"> </span>
+        </div>
+  
     
+    </div>
   </div>
-</main>
+</div>
 <script src="main.js"></script>
 </body>
 </html>

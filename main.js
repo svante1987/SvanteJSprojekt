@@ -21,10 +21,11 @@ ifall mindre röd.
 ///#endregion SHOW PRICE
 
 ///#region CANDLESTICK GRAF
-// kod för att göra candlestick graf.
+/* kod för att göra candlestick graf ifrån lightweight charts dokumentation som jag har modifierat lite.
+https://jsfiddle.net/TradingView/eaod9Lq8/*/
 var chart = LightweightCharts.createChart(document.getElementById('stockChart'), {
-	width: 600,
-  height: 300,
+	width: 1000,
+  height: 500,
 	layout: {
 		backgroundColor: '#000000',
 		textColor: 'rgba(255, 255, 255, 0.9)',
@@ -45,6 +46,9 @@ var chart = LightweightCharts.createChart(document.getElementById('stockChart'),
 	},
 	timeScale: {
 		borderColor: 'rgba(197, 203, 206, 0.8)',
+        //lägger till nedan så att tid visas
+        timeVisible: true,
+        secondsVisible: false,
 	},
 });
 

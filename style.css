@@ -1,0 +1,20 @@
+html body{
+    background-color: rgb(167, 167, 245);
+}
+#mainBox{
+    background-color: rgb(212, 211, 211);
+    width: fit-content;
+    height:700px;
+}
+
+#chartBox{
+    width:fit-content;
+    background-color: rgb(221, 221, 221);
+}
+#kryptoNav{
+    background-color: rgb(221, 221, 221);
+}
+#priceBox{
+    background-color: rgb(221, 221, 221);
+    width: fit-content;
+}
