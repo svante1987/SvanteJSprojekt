@@ -1,40 +1,50 @@
 "use strict";
+//namn på olika element som skall ändras när man byter valuta.
 document.getElementById('kryptoButton').innerText = 'Bitcoin';
 document.getElementById('kryptoLogo').src = './img/ethereum-logo-landscape-purple.png';
-///#region SHOW PRICE
-// min websocket som hämtar information om kryptovaluta från binance api url.
-// wss står för websocket secure connection
-let cryptoPriceUrl = "";
 document.getElementById('kryptoNamn').innerText = 'Ethereum';
+///#region SHOW PRICE
+//Mina urls till mina websockets
+let cryptoEthPriceUrl = 'wss://stream.binance.com:9443/ws/etheur@trade';
+let cryptoBtcPriceUrl = 'wss://stream.binance.com:9443/ws/btceur@trade';
 let cryptoName = document.getElementById('kryptoNamn').innerText;
 
-/*fetch(cryptoPriceUrl).then(response => {
- return cryptoName = 'Ethereum';
-});*/
+// min websocket som hämtar information om kryptovaluta från binance api url.
+// wss står för websocket secure connection
+let webSocketEthPrice = new WebSocket(cryptoEthPriceUrl);
+let webSocketBtcPrice = new WebSocket(cryptoBtcPriceUrl);
 
-if(cryptoName === 'Ethereum'){
-  cryptoPriceUrl = 'wss://stream.binance.com:9443/ws/etheur@trade';
-} else if(cryptoName === 'Bitcoin'){
-  cryptoPriceUrl = 'wss://stream.binance.com:9443/ws/btceur@trade';
-}
-
-let webSocketPrice = new WebSocket(cryptoPriceUrl);
-console.log(cryptoPriceUrl);
 let stockPriceElement = document.getElementById('stockPrice');
-let lastPrice = null;
 
-webSocketPrice.onmessage = (event) => {
+function ethPriceElement(){
+let lastPrice = null;
+webSocketEthPrice.onmessage = (event) => {
     let stockObject = JSON.parse(event.data);
-    let price = parseFloat(stockObject.p).toFixed(2);
-    stockPriceElement.innerText = price;
+    let ethPrice = parseFloat(stockObject.p).toFixed(2);
+    stockPriceElement.innerText = ethPrice;
 /*Om lastPrice är null eller oförändrat då blir siffrorna svarta. Price större än lastPrice då blir den grön, 
 ifall mindre röd.
 ! = not / inte          === = strictly equal too/ strikt likamed
 || = or / eller         ? = if/om       : = delimiter / avgränsare*/                       
-    stockPriceElement.style.color = !lastPrice || lastPrice === price ? 'black' : 
-    price > lastPrice ? 'green' : 'red';
-    lastPrice = price;
-};
+    stockPriceElement.style.color = !lastPrice || lastPrice === ethPrice ? 'black' : 
+    ethPrice > lastPrice ? 'green' : 'red';
+    lastPrice = ethPrice;
+  };
+} 
+
+function btcPriceElement(){
+  let lastPrice = null;
+webSocketBtcPrice.onmessage = (event) => {
+    let stockObject = JSON.parse(event.data);
+    let btcPrice = parseFloat(stockObject.p).toFixed(2);
+    stockPriceElement.innerText = btcPrice;
+                    
+    stockPriceElement.style.color = !lastPrice || lastPrice === btcPrice ? 'black' : 
+    btcPrice > lastPrice ? 'green' : 'red';
+    lastPrice = btcPrice;
+  };
+}
+
 ///#endregion SHOW PRICE
 
 ///#region CANDLESTICK GRAF
@@ -100,7 +110,6 @@ let cryptoCandlestickUrl = "";
 if(cryptoName === 'Ethereum'){
   cryptoCandlestickUrl = 'wss://stream.binance.com:9443/ws/etheur@kline_1m';
 } else if(cryptoName === 'Bitcoin'){
-  
   cryptoCandlestickUrl ='wss://stream.binance.com:9443/ws/btceur@kline_1m';
 };
 
