@@ -1,8 +1,25 @@
 "use strict";
+document.getElementById('kryptoButton').innerText = 'Bitcoin';
+document.getElementById('kryptoLogo').src = './img/ethereum-logo-landscape-purple.png';
 ///#region SHOW PRICE
 // min websocket som hämtar information om kryptovaluta från binance api url.
 // wss står för websocket secure connection
-let webSocketPrice = new WebSocket('wss://stream.binance.com:9443/ws/etheur@trade');
+let cryptoPriceUrl = "";
+document.getElementById('kryptoNamn').innerText = 'Ethereum';
+let cryptoName = document.getElementById('kryptoNamn').innerText;
+
+/*fetch(cryptoPriceUrl).then(response => {
+ return cryptoName = 'Ethereum';
+});*/
+
+if(cryptoName === 'Ethereum'){
+  cryptoPriceUrl = 'wss://stream.binance.com:9443/ws/etheur@trade';
+} else if(cryptoName === 'Bitcoin'){
+  cryptoPriceUrl = 'wss://stream.binance.com:9443/ws/btceur@trade';
+}
+
+let webSocketPrice = new WebSocket(cryptoPriceUrl);
+console.log(cryptoPriceUrl);
 let stockPriceElement = document.getElementById('stockPrice');
 let lastPrice = null;
 
@@ -16,7 +33,6 @@ ifall mindre röd.
 || = or / eller         ? = if/om       : = delimiter / avgränsare*/                       
     stockPriceElement.style.color = !lastPrice || lastPrice === price ? 'black' : 
     price > lastPrice ? 'green' : 'red';
-
     lastPrice = price;
 };
 ///#endregion SHOW PRICE
@@ -79,13 +95,23 @@ let candleSeries = chart.addCandlestickSeries({
 
 
 // nu ska jag göra en ny websocket för att hämta candlestick handelsinformation ifrån binance API.
-let webSocketCandlestick = new WebSocket('wss://stream.binance.com:9443/ws/etheur@kline_1m');
+let cryptoCandlestickUrl = "";
+
+if(cryptoName === 'Ethereum'){
+  cryptoCandlestickUrl = 'wss://stream.binance.com:9443/ws/etheur@kline_1m';
+} else if(cryptoName === 'Bitcoin'){
+  
+  cryptoCandlestickUrl ='wss://stream.binance.com:9443/ws/btceur@kline_1m';
+};
+
+
+let webSocketCandlestick = new WebSocket(cryptoCandlestickUrl);
 
 webSocketCandlestick.onmessage = (event) => {
     let message = JSON.parse(event.data);
     //k hämtar candlestick datan och inte allt det andra som jag inte vill ha.
     let candlestick = message.k;
-    console.log(message.k);
+    
 
 //metod för att uppdatera candlesticksen
 candleSeries.update({

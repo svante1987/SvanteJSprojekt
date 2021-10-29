@@ -4,28 +4,49 @@ let bitcoinText = "Bitcoin";
 let ethereumText = "Ethereum";
 
 //document.getElementById("kryptoButton").addEventListener("click", bitcoinPage);
+/*function changeFunction(){
+    if(document.getElementById('kryptoNamn') === 'Ethereum')
+bitcoinPage();
+    else if(document.getElementById('kryptoNamn') === 'Bitcoin'){
 
-function bitcoinPage(){
+    }
+}*/
+
+
+function changePage(){
     changeKryptoLogo();
-    changeStockPriceId();
-    changekryptoNamn();
-    changeToBitcoin();
+    changeKryptoNamn();
+    changeKryptoButton();
+}
+
+function changeKryptoButton(){
+    if(document.getElementById("kryptoButton").innerText === 'Ethereum'){
+        document.getElementById("kryptoButton").innerText = 'Bitcoin';
+    } else if (document.getElementById("kryptoButton").innerText === 'Bitcoin'){
+        document.getElementById("kryptoButton").innerText = 'Ethereum';
+    }
 }
 
 function changeKryptoLogo(){
-    document.getElementById("kryptoLogo").src = "./img/bitcoin-btc-logo-full.svg";
+    if(document.getElementById('kryptoNamn').innerText === 'Bitcoin'){
+    document.getElementById("kryptoLogo").src = './img/bitcoin-btc-logo-full.svg';
+    }else if(document.getElementById('kryptoNamn').innerText === 'Ethereum'){
+        document.getElementById("kryptoLogo").src = './img/ethereum-logo-landscape-purple.png';
+    }
 }
 
-/*function changeKryptoLogo(){
-    document.getElementById("kryptoLogo").src = "./img/bitcoin-btc-logo-full.svg";
-}*/
-function changekryptoNamn(){
-    document.getElementById('kryptoNamn').innerText = 'Bitcoin';
-}
 
+function changeKryptoNamn(){
+    if(document.getElementById('kryptoNamn').innerText === 'Ethereum'){
+        document.getElementById('kryptoNamn').innerText = 'Bitcoin';
+    }else if(document.getElementById('kryptoNamn').innerText === 'Bitcoin'){
+        document.getElementById('kryptoNamn').innerText = 'Ethereum';
+    }
+}
+/*
 function changeStockPriceId(){
     document.getElementById('stockPrice').id = 'btcStockPrice';
-}
+}*/
 
 function changeToBitcoin(){
 ///#region SHOW PRICE
