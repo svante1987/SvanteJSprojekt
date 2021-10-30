@@ -1,7 +1,7 @@
 "use strict";
 //Namn på olika element som skall ändras när man byter valuta.
 document.getElementById('kryptoButton').innerText = 'Bitcoin';
-document.getElementById('kryptoLogo').src = './img/ethereum-logo-landscape-purple.png';
+document.getElementById('kryptoLogo').src = './img/ethereum-logo-landscape-black.png';
 document.getElementById('kryptoNamn').innerText = 'Ethereum';
 ///#Region SHOW PRICE
 //Mina urls till mina websockets

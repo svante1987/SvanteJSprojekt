@@ -1,22 +1,23 @@
 html body{
     background-color: rgb(167, 167, 245);
+    background-image: url("./img/heroEth.png");
 }
 #mainBox{
-    background-color: rgb(212, 211, 211);
+    background-color: rgb(167, 167, 245);
     width: fit-content;
 }
 #chartBox{
     width:fit-content;
-    background-color: rgb(221, 221, 221);
+    background-color: rgb(167, 167, 245);
 }
 #kryptoNav{
-    background-color: rgb(221, 221, 221);
+    background-color: rgb(167, 167, 245);
 }
 #priceBox{
-    background-color: rgb(221, 221, 221);
+    background-color: rgb(167, 167, 245);
     width: fit-content;
 }
 #nameBox{
-    background-color: rgb(221, 221, 221);
+    background-color: rgb(167, 167, 245);
     width: fit-content;
 }
