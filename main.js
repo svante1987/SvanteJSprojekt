@@ -1,16 +1,15 @@
 "use strict";
-//namn på olika element som skall ändras när man byter valuta.
+//Namn på olika element som skall ändras när man byter valuta.
 document.getElementById('kryptoButton').innerText = 'Bitcoin';
 document.getElementById('kryptoLogo').src = './img/ethereum-logo-landscape-purple.png';
 document.getElementById('kryptoNamn').innerText = 'Ethereum';
-///#region SHOW PRICE
+///#Region SHOW PRICE
 //Mina urls till mina websockets
+// Wss står för websocket secure connection
 let cryptoEthPriceUrl = 'wss://stream.binance.com:9443/ws/etheur@trade';
 let cryptoBtcPriceUrl = 'wss://stream.binance.com:9443/ws/btceur@trade';
 let cryptoName = document.getElementById('kryptoNamn').innerText;
-
-// min websocket som hämtar information om kryptovaluta från binance api url.
-// wss står för websocket secure connection
+// Skapar mina websocket som hämtar information om kryptovaluta från binance api url.
 let webSocketEthPrice = new WebSocket(cryptoEthPriceUrl);
 let webSocketBtcPrice = new WebSocket(cryptoBtcPriceUrl);
 
@@ -44,9 +43,7 @@ webSocketBtcPrice.onmessage = (event) => {
     lastPrice = btcPrice;
   };
 }
-
 ///#endregion SHOW PRICE
-
 ///#region CANDLESTICK GRAF
 /* kod för att göra candlestick graf ifrån lightweight charts dokumentation som jag har modifierat lite.
 https://jsfiddle.net/TradingView/eaod9Lq8/*/
@@ -103,32 +100,43 @@ let candleSeries = chart.addCandlestickSeries({
   wickUpColor: 'rgba(255, 144, 0, 1)',
 });
 
-
 // nu ska jag göra en ny websocket för att hämta candlestick handelsinformation ifrån binance API.
-let cryptoCandlestickUrl = "";
+let cryptoEthCandlestickUrl = 'wss://stream.binance.com:9443/ws/etheur@kline_1m';
+let cryptoBtcCandlestickUrl = 'wss://stream.binance.com:9443/ws/btceur@kline_1m';
+let webSocketEthCandlestick = new WebSocket(cryptoEthCandlestickUrl);
+let webSocketBtcCandlestick = new WebSocket(cryptoBtcCandlestickUrl);
 
-if(cryptoName === 'Ethereum'){
-  cryptoCandlestickUrl = 'wss://stream.binance.com:9443/ws/etheur@kline_1m';
-} else if(cryptoName === 'Bitcoin'){
-  cryptoCandlestickUrl ='wss://stream.binance.com:9443/ws/btceur@kline_1m';
-};
+function ethCandlestick(){
+webSocketEthCandlestick.onmessage = (event) => {
+      let message = JSON.parse(event.data);
+      //k hämtar candlestick datan och inte allt det andra som jag inte vill ha.
+      let candlestick = message.k;
+  //metod för att uppdatera candlesticksen
+  candleSeries.update({
+      time: candlestick.t / 1000,
+      open: candlestick.o,
+      high: candlestick.h,
+      low: candlestick.l,
+      close: candlestick.c
+  })
+  }
+  chart.priceScale().applyOptions({autoScale : true});
+}
 
-
-let webSocketCandlestick = new WebSocket(cryptoCandlestickUrl);
-
-webSocketCandlestick.onmessage = (event) => {
-    let message = JSON.parse(event.data);
-    //k hämtar candlestick datan och inte allt det andra som jag inte vill ha.
-    let candlestick = message.k;
-    
-
-//metod för att uppdatera candlesticksen
-candleSeries.update({
-    time: candlestick.t / 1000,
-    open: candlestick.o,
-    high: candlestick.h,
-    low: candlestick.l,
-    close: candlestick.c
-})
+function btcCandlestick(){
+  webSocketBtcCandlestick.onmessage = (event) => {
+      let message = JSON.parse(event.data);
+      //k hämtar candlestick datan och inte allt det andra som jag inte vill ha.
+      let candlestick = message.k;
+  //metod för att uppdatera candlesticksen
+  candleSeries.update({
+      time: candlestick.t / 1000,
+      open: candlestick.o,
+      high: candlestick.h,
+      low: candlestick.l,
+      close: candlestick.c
+  })
+  }
+  chart.priceScale().applyOptions({autoScale : true});
 }
 ///#endregion CANDLESTICK GRAF

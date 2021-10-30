@@ -25,11 +25,25 @@ function changePage(){
             ],
             "id": 312
         }));
+        ethCandlestick();
+        webSocketEthCandlestick.send(JSON.stringify({
+            "method": "SUBSCRIBE",
+            "params": [
+              "etheur@kline_1m"
+            ],
+            "id": 1
+        }));
+        webSocketBtcCandlestick.send(JSON.stringify({
+            "method": "UNSUBSCRIBE",
+            "params": [
+              "btceur@kline_1m"
+            ],
+            "id": 312
+        }));
     }
         
     else if (document.getElementById('kryptoNamn').innerText === 'Bitcoin'){
         btcPriceElement();
-        
         webSocketBtcPrice.send(JSON.stringify({
             "method": "SUBSCRIBE",
             "params": [
@@ -41,6 +55,21 @@ function changePage(){
             "method": "UNSUBSCRIBE",
             "params": [
               "etheur@trade"
+            ],
+            "id": 312
+        }));
+        btcCandlestick();
+        webSocketBtcCandlestick.send(JSON.stringify({
+            "method": "SUBSCRIBE",
+            "params": [
+              "btceur@kline_1m"
+            ],
+            "id": 1
+        }));
+        webSocketEthCandlestick.send(JSON.stringify({
+            "method": "UNSUBSCRIBE",
+            "params": [
+              "etheur@kline_1m"
             ],
             "id": 312
         }));
